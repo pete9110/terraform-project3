@@ -1,15 +1,17 @@
+
 pipeline {
     agent any
-   tools {
+
+      tools {
       terraform 'terraform1'
       }
 
-  parameters {
-      choice(choices: ['apply', 'destroy'], description: 'terraform workflow', name: 'Terraform_workflow')
+    parameters {
+      choice(choices: ['apply', 'destroy'], description: 'terraform workflow', name: 'terraform_workflow')
       
-    }  
-    
-    stages {
+    }
+
+  stages {
         stage('Git checkout') {
             steps {
             git branch: 'main', url: 'https://github.com/pete9110/terraform-project3.git'
@@ -25,10 +27,9 @@ pipeline {
             sh 'terraform plan'
             }
         }
-
-         stage('terraform apply/destroy') {
+         stage('Terraform apply/destroy') {
             steps {
-                sh 'terraform "${Terraform_workflow}" --auto-approve'
+            sh 'terraform "${terraform_workflow}" --auto-approve'
             }
         }
         
